@@ -1,0 +1,207 @@
+03-01: Sorting
+Please answer every theoretical question regarding this task here*
+--Based on the lecture materials for the sorting algorithms *InsertionSort* and *SelectionSort*, explain how these algorithms work and point out their differences?
+
+Selection Sort: 
+Steps:	 i) consider the position of the array from left to right 
+		ii) compare the first element in the array (position=0) with every other element and if there exists a smaller value than the first element swap it with the 1st element, continue this comparison with respect to the current 1st element of the array until the data of the array is exhausted 
+		iii) now update the position of 1st element by advancing the index value by 1 (position=0+1) and repreat step (ii)
+		iv) repeat (iii) until position of 1st element = last element(position=arraylength-1)
+		STOP
+
+example-
+i/p array: [4, 2, 5, 1, 3]
+
+comparison at each step:
+[2, 4, 5, 1, 3]
+[2, 4, 5, 1, 3]
+[1, 4, 5, 2, 3]
+[1, 4, 5, 2, 3]
+[1, 4, 5, 2, 3]
+[1, 2, 5, 4, 3]
+[1, 2, 5, 4, 3]
+[1, 2, 4, 5, 3]
+[1, 2, 3, 5, 4]
+[1, 2, 3, 4, 5] - sorted o/p
+ 
+* Number of comparisons =10 i.e, (n(n-1)/2)
+
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+InsertionSort: 
+Steps: 
+		i)consider the  1st element of the array to be already sorted
+		ii) pick the next element
+		iii)compare the picked element with all the element in the sorted sublist that is greater than the value to be sorted 
+		iv) insert the element in the correct position accordingly in the array
+		v) repeat until the whole array is sorted
+		
+example: 
+
+i/p array: [4, 2, 5, 1, 3]
+
+comparison at each step:
+[2, 4, 5, 1, 3]
+[2, 4, 5, 1, 3]
+[1, 2, 4, 5, 3]
+[1, 2, 3, 4, 5]
+
+* Number of comparisons =4 
+*useful only for small data sets
+
+differences:
+* number of comparison performed by Insertion sort are lesser than that of selection sort
+
+--------------------------------------------------------------------------------------------------------------------------------------------
+--Which of these sorting algorithms is stable? Explain your answer briefly.
+
+insertion sort is stable while selection sort is unstable
+
+example: if input array is [2,1,4,6,4,3]
+
+comparisons performed by selection sort on [2,1,4,6,4,3]:
+[1, 2, 4, 6, 4, 3]
+[1, 2, 4, 6, 4, 3]
+[1, 2, 4, 6, 4, 3]
+[1, 2, 4, 6, 4, 3]
+[1, 2, 4, 6, 4, 3]
+[1, 2, 4, 6, 4, 3]
+[1, 2, 4, 6, 4, 3]
+[1, 2, 4, 6, 4, 3]
+[1, 2, 4, 6, 4, 3]
+[1, 2, 4, 6, 4, 3]
+[1, 2, 4, 6, 4, 3]
+[1, 2, 3, 6, 4, 4]** order of the objects with the same keys changes
+[1, 2, 3, 4, 6, 4]
+[1, 2, 3, 4, 6, 4]
+[1, 2, 3, 4, 4, 6] -> here the order of the two objects with equal keys post sorting (4) is not same as the order in which they appeared as unsorted array 
+
+comparisons performed by insertion sort on [2,1,4,6,4,3]:
+[1, 2, 4, 6, 4, 3]
+[1, 2, 4, 6, 4, 3]
+[1, 2, 4, 6, 4, 3]
+[1, 2, 4, 4, 6, 3]
+[1, 2, 3, 4, 4, 6] * here the order of the two objects with the equal keys remains same both before and after sorting
+
+Thus insertion sort is stable and selection sort is not
+
+--How does its computational complexity change if the position for inserting the element is found using binary search instead of linear search?
+** Binary search reduces the number of comparisons w.r.t linear search so as to figure out the correct location in the sorted sub array to place the insertion element 
+**in worst case scenario time complexity of normal insertion sort(with linear) is O(n) in the i'th iteration whereas insertion sort with the help of binary search reduces the worst case scenario to O(log(n))
+**overall time complexity of algorithm in worstcase is still O(n2 because of the number of swaps reqd. to place every element in the correct position)
+
+------------------------------------------------------------------------------------------------------------------------------------------
+03-02: Quicksort for Comparable-Objects
+*Please answer every theoretical question regarding this task here*
+
+--Explain the algorithm Quicksort (in the file TheoreticalQuestions.txt) using the example a = {5, 3, 4, 8, 7, 1, 2} and the middle element constituting the pivot element. Write down the contents of this array after each partitioning.
+
+I/P array is{5,3,4,8,7,1,2}
+i) Middle element has to be considered as the pivot element i.e 8
+ii) Swap the pivot element (8) with the last element in an array (2) now the array elements are  : {5,3,4,2,7,1,8}
+iii) Starting from the left traversing towards right compare if each element is greater than pivot element and  starting from the right traversing towards left compare if each element is lesser than the pivot element and if both the conditions are met swap those two elements. All termination conditions occur when all the elements to the left of the selected pivot element should be less than pivot element and all the elements to the right of the selected pivot element should be greater than pivot element
+
+***Numbers in square braces are the pivot elements.
+pivot = 8.
+iv) 1st iteration: Is 5 > 8 ? : No ->  Is 3 > 8 ? : No ->  Is 4 > 8 ? : No :  Is 2 > 8 ? : No ->  Is 7 > 8 ? : No ->  Is 1 > 8 ? : No -> Is 8 > 8 ? : No.
+So the element 8 is in its correct position where all the elements towards its left are smaller than 8 : {5,3,4,2,7,1,[8]}
+v) pivot = 4, a= {1,3,[4],2,7,5}{8}
+vi) pivot = 4, a= {1,3,2,[4],7,5}{8}
+vii) pivot1 = 3, pivot2 = 7, a= {1,[3],2}{4,[7],5}{8}
+viii) pivot1 = 3, pivot2 = 7, a= {1,2}{3}{4,5}{7}{8}
+ix) Final iteration pivot1 = 1, pivot2 = 4, a={1}{2}{3}{4}{5}{7}{8}
+
+--Which complexity class does *QuickSort* belong to (average case)? Give reasons. 
+Discuss whether the choice of the pivot element influences the number of comparisons needed. 
+What does a “worst case” look like?
+
+ *Average Case : dividing/partitioning an array requires "n" comparison and comparison includes log n(base 2) 
+ thus the complexity of quick sort algorithm (average case) is n log n(base 2).
+ 
+ *choice of pivot element:
+ Pivot element ==> Choice of pivot element affects sorting. Improper choice of pivot element causes recursive sorting with the same pivot element
+
+ *Worst case:
+a) This may occur if the pivot happens to be the smallest or largest element in the list.
+b) If we choose the lowest element or the highest element as pivot then there will be n-1 comparisons i.e. we have more comparisons to handle.  
+
+------------------------------------------------------------------------------------------------------------------------------------------
+03-03: MergeSort Using Comparator
+*Please answer every theoretical question regarding this task here*
+
+--Explain the sorting algorithm MergeSort, presented above, considering the example of a = {5, 3, 4, 7, 1, 2} while noting down all intermediate steps (as in the lecture, cf. slides 334 to 340). Explain the principle of “divide and conquer” with this algorithm.
+
+original array = [5,3,4,7,1,2]
+main calls mergeSort(int[] a) with original array as "a" which in turn calls _mergeSort(a, new int[a.length], 0, a.length-1);
+
+function declaration of _mergeSort-->_mergeSort(int a[], int copy[], int start, int end)
+    First Call from mergeSort --> _mergeSort
+    values: a=[5,3,4,7,1,2], copy=[0,0,0,0,0,0], start=0 end=5
+    data in first call: mid=2
+        first recursive call using _mergeSort(a, copy, start, mid);
+        values: a=[5,3,4,7,1,2], copy=[0,0,0,0,0,0], start=0 end=2
+        data in first recursive call: mid=1
+            second recursive call using _mergeSort(a, copy, start, mid);
+            values: a=[5,3,4,7,1,2], copy=[0,0,0,0,0,0], start=0 end=1
+            data in second recursive call: mid=0
+                third recursive call using _mergeSort(a, copy, start, mid);
+                values: a=[5,3,4,7,1,2], copy=[0,0,0,0,0,0], start=0 end=0
+                recursive condition failed if(start < end) return
+            recursion continues with the first recursive call to _mergeSort(a, copy, mid + 1, end) resolving to 
+            _mergeSort([5,3,4,7,1,2], [0,0,0,0,0,0], 1, 1)
+                values: a=[5,3,4,7,1,2], copy=[0,0,0,0,0,0], start=0 end=0  
+                 recursive condition failed if(start < end) return
+            call merge method for a=[5,3,4,7,1,2], copy=[0,0,0,0,0,0], start = 0, mid=0, end=1
+                values: i=0, j=0, k=0
+                copy=[5, 0, 0, 0, 0, 0]
+                final result: a=[3, 5, 4, 7, 1, 2]
+            ##########end of second recursion stack###########
+        recursion continues with the recursive call to _mergeSort(a, copy, mid + 1, end) resolving to 
+            _mergeSort([3,5,4,7,1,2], [5, 0, 0, 0, 0, 0], 2, 2)
+            recursive condition failed if(start < end) return
+        call merge method for a=[5,3,4,7,1,2], copy=[5, 0, 0, 0, 0, 0], start = 0, mid=1, end=2
+            values: i=0, j=0, k=0
+            copy= [3, 5, 0, 0, 0, 0]
+            final result: a= [3, 4, 5, 7, 1, 2]
+            ##########end of first recursion stack for _mergeSort(a, copy, start, mid);###########
+    recursion continues with the recursive call to _mergeSort(a, copy, mid + 1, end) resolving to 
+        _mergeSort([3, 4, 5, 7, 1, 2], [3, 5, 0, 0, 0, 0], 3, 5)
+        values: start=3 mid=4 end=5
+        recursive call to _mergeSort(a, copy, start, mid);
+            values: start= 3 End= 4 Mid= 3
+            recursive call to _mergeSort(a, copy, start, mid);
+                recursive condition failed if(start < end) return
+        call merge method for a=[3, 4, 5, 7, 1, 2], copy=[3, 5, 0, 0, 0, 0], start = 3, mid=3, end=4
+            values: i=0 j=3 k=0
+            copy=[7, 5, 0, 0, 0, 0]
+            final result: a= [3, 4, 5, 1, 7, 2]
+        recursive call to _mergeSort(a, copy, mid+1, end) resolving to 
+            _mergeSort([3, 4, 5, 1, 7, 2], [7, 5, 0, 0, 0, 0], 5, 5)
+            values: start= 3 End= 5 Mid= 4
+            recursive call to _mergeSort(a, copy, start, mid);
+                recursive condition failed if(start < end) return
+        call merge method for a=[3, 4, 5, 1, 7, 2], copy=[7, 5, 0, 0, 0, 0], start = 3, mid=4, end=5
+            values: i=0 j=3 k=0
+            copy= [1, 7, 0, 0, 0, 0]
+            final result: a= [3, 4, 5, 1, 2, 7]
+        ############end of first recursion stack for _mergeSort(a, copy, mid + 1, end)###############
+    call merge for first call with values a=[3, 4, 5, 1, 2, 7], copy=[1, 7, 0, 0, 0, 0], start = 0, mid=2, end=5:
+        values: i=0, j=0, k=0
+        copy=[3, 4, 5, 0, 0, 0]
+        final result:[1, 2, 3, 4, 5, 7]
+    control returns to mergeSort
+control return to main
+end of program with result a=[1, 2, 3, 4, 5, 7]
+
+--Why does this algorithm require less space than that one presented during the lecture?
+
+This algorithm uses only one array copy[] to store the elements that is dividing. Where as algorithm which was presented during the lecture used two arrays to sort the left and right elements that were going to be divided.
+
+--Is the MergeSort algorithm stable? Give reasons for your answer.
+
+MergeSort algorithm is one of the most stable algorithms, however the stability of it depends on implementation of the merge method. 
+When merging the two halves, left and right of the array, we should also consider the fact of having equal elements.
+In that case we should favor the left elements over the right ones, by for example stating the condition aleft[i]>=aright[j]
+
+----------------------------------------------------------------------------------------------------------------------------------------------
+
